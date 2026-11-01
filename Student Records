@@ -1,0 +1,103 @@
+import time
+
+width = 45
+grades = {}
+
+def show_header():
+    print("=" * width)
+    print("-- WELCOME TO MY SYSTEM --".center(width))
+    print("=" * width)
+
+def add_students():
+    print("=" * width)
+    print("-- STUDENT PROFILE --".center(width))
+    print("=" * width)
+
+    try:
+        quantity = int(input("Enter Student Quantity: "))
+        print("-" * width)
+
+        if quantity <= 0:
+            print()
+            print("-- [ Enter a Valid Quantity! ] --".center(width))
+            return
+
+    except ValueError:
+        print("[ ENTER NUMBERS ONLY! ] --".center(width))
+        return
+
+    for i in range(quantity):
+        print()
+
+        student_name =  input("Enter Student Name  : ")
+
+        if not student_name:
+            print("[ STUDENT NAME CANNOT BE EMPTY! ]".center(width))
+
+        if student_name in grades:
+            print("[ STUDENT ALREADY EXIST! ]".center(width))
+
+        try:
+            student_grade = float(input("Enter Student Grade : "))
+            if student_grade < 0 or student_grade > 100:
+                print("[ GRADE MUST BE AT LEAST 0 TO 100 ]".center(width))
+                return
+
+            grades[student_name] = student_grade
+
+        except ValueError:
+            print()
+            print("[ ENTER NUMBERS ONLY! ] --".center(width))
+            continue
+
+    show_overview()
+
+def show_overview():
+    print()
+    print("=" * width)
+    print("-- STUDENT OVERVIEW --".center(width))
+    print("=" * width)
+    print()
+
+    if not grades:
+        print("[ NO STUDENT RECORDS AVAILABLE ] --".center(width))
+        return
+
+    for number, (name, grade) in enumerate(grades.items(), start=1):
+        print(f"{number:2}. NAME: {name:<7} ----------   GRADE: {grade: .2f}")
+
+def main():
+    while True:
+        show_header()
+
+        username = input("Enter your Name : ")
+        print("-" * width)
+        print(f"Good Day {username.upper()}!".center(width))
+
+        print("OPTIONS:".center(width))
+        print("1. Add Student")
+        print("2. Exit")
+        print()
+
+        try:
+            choice1 = int(input("Enter your Choice: "))
+            if choice1 <1 or choice1 > 2:
+                print()
+                print("[ INVALID CHOICE ]".center(width))
+                return
+        except ValueError:
+            print("[ INVALID INPUT! ]".center(width))
+            continue
+
+        if choice1 == 1:
+            add_students()
+        elif choice1 == 2:
+            print("=" * width)
+            print("-- Thank You for using my System --".center(width))
+            print("=" * width)
+            break
+        else:
+            print("-- [ Invalid Option! ] --".center(width))
+            time.sleep(1.5)
+
+main()
